@@ -1,0 +1,15 @@
+@import '../../styles/common';
+
+.base {
+	background: lightskyblue;
+
+	ul {
+		@include resetList;
+	}
+
+	a {
+		&:global(.active) {
+			font-weight: bold;
+		}
+	}
+}
