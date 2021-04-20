@@ -1,13 +1,15 @@
 @import '../../styles/common';
 
 .base {
-	background: lightskyblue;
-
-	ul {
-		@include resetList;
-	}
+	display: flex;
+	align-items: center;
 
 	a {
+		display: flex;
+		padding: 0 rem(8);
+		color: $colorHighlightText;
+		text-decoration: none;
+
 		&:global(.active) {
 			font-weight: bold;
 		}
