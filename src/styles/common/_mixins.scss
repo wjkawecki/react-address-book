@@ -1,0 +1,36 @@
+@mixin resetList {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+@mixin visuallyHidden {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+
+	&:focus {
+		clip: auto;
+		height: auto;
+		overflow: auto;
+		position: absolute;
+		width: auto;
+	}
+}
+
+@mixin animationScaleIn($transition: $transitionDefault) {
+	animation: scaleIn $transition forwards;
+
+	@keyframes scaleIn {
+		0% {
+			transform: scale(0);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+}

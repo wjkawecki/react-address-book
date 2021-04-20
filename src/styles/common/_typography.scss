@@ -1,0 +1,45 @@
+$fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$fontSizeBase: 16px;
+
+@function rem($value) {
+	@return ($value + 0px) / $fontSizeBase + 0rem;
+}
+
+@function fluidValue($minValue, $maxValue) {
+	// https://websemantics.uk/tools/responsive-font-calculator
+	// $minValue @ `small` breakpoint increasing to $maxValue @ `large` breakpoint
+
+	@return clamp(
+		rem($minValue),
+		calc(
+			#{rem($minValue)} + (#{$maxValue} - #{$minValue}) * ((
+							100vw - #{map-get($breakpoints, small)}px
+						) /
+						(#{map-get($breakpoints, large)} - #{map-get($breakpoints, small)}))
+		),
+		rem($maxValue)
+	);
+}
+
+@mixin safariResizeFix {
+	// https://codepen.io/martinwolf/pen/yKgagE
+	min-height: 0vw;
+}
+
+@mixin typographyHeadline {
+	font-size: fluidValue(28, 36);
+	line-height: 1.1;
+	@include safariResizeFix;
+}
+
+@mixin typographySubtitle {
+	font-size: fluidValue(18, 20);
+	line-height: 1.3;
+	@include safariResizeFix;
+}
+
+@mixin typographyParagraph {
+	font-size: fluidValue(16, 18);
+	line-height: 1.5;
+	@include safariResizeFix;
+}

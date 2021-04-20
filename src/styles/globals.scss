@@ -1,11 +1,44 @@
-body {
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+@import '../../node_modules/normalize.css';
+@import 'common';
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+body {
+	font-family: $fontFamily;
+	font-size: $fontSizeBase;
+	@include typographyParagraph;
+	color: $colorText;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	// https://css-tricks.com/css-fix-for-100vh-in-mobile-webkit/
+	height: 100vh;
+	height: -webkit-fill-available;
+}
+
+html {
+	height: -webkit-fill-available;
+}
+
+h1 {
+	margin: 0;
+	@include typographyHeadline;
+}
+
+h2 {
+	margin-top: 0;
+	@include typographySubtitle;
+}
+
+p {
+	margin-top: 0;
+	@include typographyParagraph;
+}
+
+.visually-hidden {
+	@include visuallyHidden;
 }
