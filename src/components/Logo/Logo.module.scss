@@ -1,0 +1,13 @@
+@import '../../styles/common';
+
+.base {
+	display: flex;
+
+	img {
+		height: rem(60);
+	}
+
+	span {
+		@include visuallyHidden;
+	}
+}

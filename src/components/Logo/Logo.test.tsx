@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import Header from './Header';
+import Logo from './Logo';
 
 test('renders address book link', () => {
-	render(<Header />);
+	render(<Logo />);
 	const linkElement = screen.getByText(/address book/i);
 	expect(linkElement).toBeInTheDocument();
 });
