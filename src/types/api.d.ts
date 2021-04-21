@@ -1,3 +1,5 @@
+// In real project this would probably be generated based on an OpenAPI specification.
+
 declare namespace API {
 	interface User {
 		name: { title: string; first: string; last: string };

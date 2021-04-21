@@ -1,0 +1,12 @@
+@import '../../styles/common';
+
+.base {
+	div {
+		display: flex;
+		align-items: center;
+	}
+	label {
+		flex-grow: 1;
+		margin-left: rem(12);
+	}
+}

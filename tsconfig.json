@@ -15,8 +15,8 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"typeRoots": ["src/types"]
+		"typeRoots": ["src/types"],
+		"types": ["@types/jest"]
 	},
-	"include": ["react-app-env.d.ts", "**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules"]
+	"include": ["react-app-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
