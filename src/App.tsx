@@ -1,26 +1,27 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
+import { UsersProvider } from './context/usersContext';
 import routes from './routes';
 
 const App: React.FC = (): React.ReactElement => {
 	return (
 		<BrowserRouter>
-			{/* https://a11y-101.com/development/skip-link */}
-			<a className="visually-hidden" href="#main">
-				Skip to main content
-			</a>
+			<UsersProvider>
+				{/* https://a11y-101.com/development/skip-link */}
+				<a className="visually-hidden" href="#main">
+					Skip to main content
+				</a>
 
-			<Header />
+				<Header />
 
-			<main id="main">
-				<Switch>
-					{routes.map(({ exact, path, component, key }) => (
-						<Route exact={exact} path={path} component={component} key={key} />
-					))}
-				</Switch>
-			</main>
-
-			<footer>footer</footer>
+				<main id="main">
+					<Switch>
+						{routes.map(({ exact, path, component, key }) => (
+							<Route exact={exact} path={path} component={component} key={key} />
+						))}
+					</Switch>
+				</main>
+			</UsersProvider>
 		</BrowserRouter>
 	);
 };
