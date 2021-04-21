@@ -1,13 +1,17 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 type Action =
-	| { type: 'FETCH_USERS'; fetching: boolean }
 	| { type: 'ADD_USERS'; users: API.User[] }
-	| { type: 'SET_NATIONALITY_FILTER'; nationality: UserNationality };
+	| { type: 'FETCH_START' }
+	| { type: 'FETCH_END' }
+	| { type: 'SET_NATIONALITY_FILTER'; nationality: Nationality }
+	| { type: 'SET_SEARCH'; search: string };
 
 interface State {
+	fetching: boolean;
+	nationalityFilter: Nationality[];
+	search: string;
 	users: API.User[];
-	nationalityFilter: UserNationality[];
 }
 
 interface Context {
@@ -15,8 +19,8 @@ interface Context {
 	dispatch: React.Dispatch<Action>;
 }
 
-// Nationalities that can be used for User filtering
-enum UserNationality {
+// Possible nationalities of fetched users
+enum Nationality {
 	CH = 'CH',
 	ES = 'ES',
 	FR = 'FR',
@@ -25,9 +29,14 @@ enum UserNationality {
 
 const LOCAL_STORAGE_NATIONALITY_FILTER_KEY = 'nationalityFilter';
 const storedNationalityFilter = localStorage.getItem(LOCAL_STORAGE_NATIONALITY_FILTER_KEY);
+const defaultNationalityFilter = Object.values(Nationality);
 const defaultState: State = {
+	fetching: false,
+	nationalityFilter: storedNationalityFilter
+		? JSON.parse(storedNationalityFilter)
+		: defaultNationalityFilter,
+	search: '',
 	users: [],
-	nationalityFilter: storedNationalityFilter ? JSON.parse(storedNationalityFilter) : [],
 };
 
 const UsersContext = createContext<Context>({
@@ -40,8 +49,14 @@ const usersReducer = (state: State, action: Action): State => {
 		case 'ADD_USERS':
 			return { ...state, users: [...state.users, ...action.users] };
 
+		case 'FETCH_START':
+			return { ...state, fetching: true };
+
+		case 'FETCH_END':
+			return { ...state, fetching: false };
+
 		case 'SET_NATIONALITY_FILTER': {
-			let nationalityFilter: UserNationality[];
+			let nationalityFilter: Nationality[];
 
 			if (state.nationalityFilter.includes(action.nationality)) {
 				nationalityFilter = state.nationalityFilter.filter((nat) => nat !== action.nationality);
@@ -56,6 +71,9 @@ const usersReducer = (state: State, action: Action): State => {
 				nationalityFilter,
 			};
 		}
+
+		case 'SET_SEARCH':
+			return { ...state, search: action.search };
 
 		default:
 			return state;
@@ -76,18 +94,28 @@ const useUsers = (): Context => {
 		throw new Error('useUsers must be used within a UsersProvider');
 	}
 
-	// Filter users if nationalityFilter is provided
-	if (context.state.nationalityFilter.length) {
-		const filteredUsers = context.state.users.filter((user) =>
-			context.state.nationalityFilter.includes(user.nat as UserNationality)
-		);
+	// Filter users ...
+	const filteredUsers = context.state.users.filter(({ name, nat }) => {
+		let meetsConditions = true;
 
-		// Don't mutate the state directly, in case
-		// we would want to change the filtering again
-		return { ...context, state: { ...context.state, users: filteredUsers } };
-	}
+		// ... by nationalityFilter ...
+		if (meetsConditions && context.state.nationalityFilter.length) {
+			meetsConditions = context.state.nationalityFilter.includes(nat as Nationality);
+		}
 
-	return context;
+		// ... by case insensitive search in `name.first + name.last`
+		if (meetsConditions && context.state.search) {
+			meetsConditions = `${name.first}${name.last}`
+				.toLowerCase()
+				.includes(context.state.search.toLowerCase());
+		}
+
+		return meetsConditions;
+	});
+
+	// Don't mutate the state directly, in case
+	// we would want to change the filtering again
+	return { ...context, state: { ...context.state, users: filteredUsers } };
 };
 
-export { UsersProvider, useUsers, UserNationality };
+export { UsersProvider, useUsers, Nationality };

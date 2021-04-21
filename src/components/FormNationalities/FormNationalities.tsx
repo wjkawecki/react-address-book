@@ -1,4 +1,4 @@
-import { UserNationality, useUsers } from '../../context/usersContext';
+import { Nationality, useUsers } from '../../context/usersContext';
 import styles from './FormNationalities.module.scss';
 
 const FormNationalities: React.FC = (): React.ReactElement => {
@@ -8,7 +8,7 @@ const FormNationalities: React.FC = (): React.ReactElement => {
 	} = useUsers();
 
 	const onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch({ type: 'SET_NATIONALITY_FILTER', nationality: value as UserNationality });
+		dispatch({ type: 'SET_NATIONALITY_FILTER', nationality: value as Nationality });
 	};
 
 	return (
@@ -16,7 +16,8 @@ const FormNationalities: React.FC = (): React.ReactElement => {
 			<fieldset>
 				<legend>I want to display users of these nationalities</legend>
 
-				{Object.values(UserNationality).map((nat) => (
+				{/* Loop all possible nationalities */}
+				{Object.values(Nationality).map((nat) => (
 					<div key={nat}>
 						<input
 							id={`nat_${nat}`}

@@ -34,7 +34,10 @@ declare namespace API {
 
 	interface Params {
 		inc?: ('email' | 'login' | 'name' | 'nat' | 'picture' | 'location' | 'phone' | 'cell')[];
+		nat?: string[];
+		page?: number;
 		results?: number;
+		seed?: string;
 	}
 
 	interface Response {

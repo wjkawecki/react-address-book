@@ -1,6 +1,8 @@
 @import '../../styles/common';
 
 .base {
+	position: sticky;
+	top: 0;
 	padding: rem(20);
 	background: pink;
 }

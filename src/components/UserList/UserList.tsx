@@ -5,30 +5,32 @@ import styles from './UserList.module.scss';
 
 const UserList: React.FC = (): React.ReactElement => {
 	const {
-		state: { users },
+		state: { users, nationalityFilter, fetching },
 		dispatch,
 	} = useUsers();
 
 	useEffect(() => {
-		// do the initial fetch only if there are no users yet
-		if (users.length) return;
+		if (fetching || users.length) return;
 
-		const init = async () => {
-			const response = await fetchUsers({ results: 50 });
+		dispatch({ type: 'FETCH_START' });
+		fetchUsers({ nat: nationalityFilter })
+			.then((response) => dispatch({ type: 'ADD_USERS', users: response.results }))
+			.then(() => dispatch({ type: 'FETCH_END' }));
 
-			dispatch({ type: 'ADD_USERS', users: response.results });
-		};
-
-		init();
-	}, [dispatch, users.length]);
+		// disabling react-hooks/exhaustive-deps as we really want to do it only once
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
-		<ul>
-			{!!users.length &&
-				users.map((user) => (
-					<li key={user.login?.uuid}>{`${user.name?.first} ${user.name?.last} [${user.nat}]`}</li>
-				))}
-		</ul>
+		<div>
+			<p>Fetching: {`${fetching}`}</p>
+			<ul className={styles.base}>
+				{!!users.length &&
+					users.map((user) => (
+						<li key={user.login?.uuid}>{`${user.name?.first} ${user.name?.last} [${user.nat}]`}</li>
+					))}
+			</ul>
+		</div>
 	);
 };
 
