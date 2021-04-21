@@ -14,8 +14,7 @@ $fontSizeBase: 16px;
 		calc(
 			#{rem($minValue)} + (#{$maxValue} - #{$minValue}) * ((
 							100vw - #{map-get($breakpoints, small)}px
-						) /
-						(#{map-get($breakpoints, large)} - #{map-get($breakpoints, small)}))
+						) / (#{map-get($breakpoints, large)} - #{map-get($breakpoints, small)}))
 		),
 		rem($maxValue)
 	);
@@ -27,7 +26,7 @@ $fontSizeBase: 16px;
 }
 
 @mixin typographyHeadline {
-	font-size: fluidValue(28, 36);
+	font-size: fluidValue(24, 36);
 	line-height: 1.1;
 	@include safariResizeFix;
 }

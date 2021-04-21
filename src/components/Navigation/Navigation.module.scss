@@ -2,16 +2,29 @@
 
 .base {
 	display: flex;
-	align-items: center;
+	flex-grow: 1;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-end;
 
 	a {
 		display: flex;
-		padding: 0 rem(8);
+		padding: rem(12);
 		color: $colorHighlightText;
 		text-decoration: none;
+		transition: color $transitionDefault;
 
 		&:global(.active) {
-			font-weight: bold;
+			color: $colorPrimary;
+		}
+	}
+
+	@include from(medium) {
+		flex-direction: row;
+		align-items: center;
+
+		a {
+			padding: rem(20);
 		}
 	}
 }
