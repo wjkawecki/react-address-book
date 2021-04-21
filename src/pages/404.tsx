@@ -3,9 +3,9 @@ import RoutePaths from '../routes/paths';
 
 const Page404: React.FC = (): React.ReactElement => {
 	return (
-		<main>
+		<section>
 			Not found! Go to <Link to={RoutePaths.Home}>Home</Link>
-		</main>
+		</section>
 	);
 };
 

@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import RoutePaths from '../../routes/paths';
 import Navigation from './Navigation';
 
-test('renders address book link', () => {
-	render(<Navigation />);
-	const linkElement = screen.getByText(/address book/i);
-	expect(linkElement).toBeInTheDocument();
+test('renders router links', () => {
+	render(<Navigation />, { wrapper: MemoryRouter });
+
+	expect(document.querySelector(`a[href="${RoutePaths.Home}"]`)).toBeInTheDocument();
+	expect(document.querySelector(`a[href="${RoutePaths.Settings}"]`)).toBeInTheDocument();
 });

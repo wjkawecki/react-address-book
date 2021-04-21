@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 type Action =
-	| { type: 'addUsers'; payload: API.User[] }
-	| { type: 'setNationality'; payload: UserNationality };
+	| { type: 'ADD_USERS'; users: API.User[] }
+	| { type: 'SET_NATIONALITY_FILTER'; nationality: UserNationality };
 
 interface State {
 	users: API.User[];
-	nationalities: UserNationality[];
+	nationalityFilter: UserNationality[];
 }
 
 interface Context {
@@ -22,11 +22,11 @@ enum UserNationality {
 	GB = 'GB',
 }
 
-const LOCAL_STORAGE_NATIONALITIES_KEY = 'nationalities';
-const storedNationalities = localStorage.getItem(LOCAL_STORAGE_NATIONALITIES_KEY);
+const LOCAL_STORAGE_NATIONALITY_FILTER_KEY = 'nationalityFilter';
+const storedNationalityFilter = localStorage.getItem(LOCAL_STORAGE_NATIONALITY_FILTER_KEY);
 const defaultState: State = {
 	users: [],
-	nationalities: storedNationalities ? JSON.parse(storedNationalities) : [],
+	nationalityFilter: storedNationalityFilter ? JSON.parse(storedNationalityFilter) : [],
 };
 
 const UsersContext = createContext<Context>({
@@ -36,29 +36,28 @@ const UsersContext = createContext<Context>({
 
 const usersReducer = (state: State, action: Action): State => {
 	switch (action.type) {
-		case 'addUsers': {
-			return { ...state, users: [...state.users, ...action.payload] };
-		}
+		case 'ADD_USERS':
+			return { ...state, users: [...state.users, ...action.users] };
 
-		case 'setNationality': {
-			let newNationalities: UserNationality[];
+		case 'SET_NATIONALITY_FILTER': {
+			let nationalityFilter: UserNationality[];
 
-			if (state.nationalities.includes(action.payload)) {
-				newNationalities = state.nationalities.filter((nat) => nat !== action.payload);
+			if (state.nationalityFilter.includes(action.nationality)) {
+				nationalityFilter = state.nationalityFilter.filter((nat) => nat !== action.nationality);
 			} else {
-				newNationalities = [...state.nationalities, action.payload];
+				nationalityFilter = [...state.nationalityFilter, action.nationality];
 			}
 
-			localStorage.setItem(LOCAL_STORAGE_NATIONALITIES_KEY, JSON.stringify(newNationalities));
+			localStorage.setItem(LOCAL_STORAGE_NATIONALITY_FILTER_KEY, JSON.stringify(nationalityFilter));
 
 			return {
 				...state,
-				nationalities: newNationalities,
+				nationalityFilter,
 			};
 		}
-		default: {
-			throw new Error(`Unhandled action type`);
-		}
+
+		default:
+			return state;
 	}
 };
 

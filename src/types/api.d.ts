@@ -32,6 +32,11 @@ declare namespace API {
 		nat: string;
 	}
 
+	interface Params {
+		inc?: ('email' | 'login' | 'name' | 'nat' | 'picture' | 'location' | 'phone' | 'cell')[];
+		results?: number;
+	}
+
 	interface Response {
 		results: User[];
 		info: {

@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Header from './Header';
 
-test('renders address book link', () => {
-	render(<Header />);
-	const linkElement = screen.getByText(/address book/i);
-	expect(linkElement).toBeInTheDocument();
+test('renders h1 element', () => {
+	render(<Header />, { wrapper: MemoryRouter });
+	expect(document.querySelector('h1')).toBeInTheDocument();
 });

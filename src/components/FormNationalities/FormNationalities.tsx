@@ -3,12 +3,12 @@ import styles from './FormNationalities.module.scss';
 
 const FormNationalities: React.FC = (): React.ReactElement => {
 	const {
-		state: { nationalities },
+		state: { nationalityFilter },
 		dispatch,
 	} = useUsers();
 
 	const onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch({ type: 'setNationality', payload: value as UserNationality });
+		dispatch({ type: 'SET_NATIONALITY_FILTER', nationality: value as UserNationality });
 	};
 
 	return (
@@ -23,7 +23,7 @@ const FormNationalities: React.FC = (): React.ReactElement => {
 							type="checkbox"
 							name="nat"
 							value={nat}
-							checked={nationalities.includes(nat)}
+							checked={nationalityFilter.includes(nat)}
 							onChange={onChange}
 						/>
 						<label htmlFor={`nat_${nat}`}>{nat}</label>

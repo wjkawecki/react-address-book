@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Logo from './Logo';
 
-test('renders address book link', () => {
-	render(<Logo />);
-	const linkElement = screen.getByText(/address book/i);
-	expect(linkElement).toBeInTheDocument();
+test('renders a11y text', () => {
+	render(<Logo />, { wrapper: MemoryRouter });
+	const a11yText = screen.getByText(/back to home/i);
+	expect(a11yText).toBeInTheDocument();
 });
