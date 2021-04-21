@@ -10,6 +10,9 @@ const PageHome: React.FC = (): React.ReactElement => {
 	} = useUsers();
 
 	useEffect(() => {
+		// do the initial fetch only if there are no users yet
+		if (users.length) return;
+
 		const init = async () => {
 			const response = await fetchUsers();
 
@@ -17,7 +20,7 @@ const PageHome: React.FC = (): React.ReactElement => {
 		};
 
 		init();
-	}, [dispatch]);
+	}, [dispatch, users.length]);
 
 	return (
 		<main>
