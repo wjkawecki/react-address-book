@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 type Action =
-	| { type: 'ADD_USERS'; users: API.User[] }
+	| { type: 'ADD_USERS'; results: API.User[] }
 	| { type: 'FETCH_START' }
 	| { type: 'FETCH_END' }
 	| { type: 'SET_NATIONALITY_FILTER'; nationality: Nationality }
@@ -11,7 +11,7 @@ interface State {
 	fetching: boolean;
 	nationalityFilter: Nationality[];
 	search: string;
-	users: API.User[];
+	results: API.User[];
 }
 
 interface Context {
@@ -36,7 +36,7 @@ const defaultState: State = {
 		? JSON.parse(storedNationalityFilter)
 		: defaultNationalityFilter,
 	search: '',
-	users: [],
+	results: [],
 };
 
 const UsersContext = createContext<Context>({
@@ -47,7 +47,7 @@ const UsersContext = createContext<Context>({
 const usersReducer = (state: State, action: Action): State => {
 	switch (action.type) {
 		case 'ADD_USERS':
-			return { ...state, users: [...state.users, ...action.users] };
+			return { ...state, results: [...state.results, ...action.results] };
 
 		case 'FETCH_START':
 			return { ...state, fetching: true };
@@ -94,8 +94,8 @@ const useUsers = (): Context => {
 		throw new Error('useUsers must be used within a UsersProvider');
 	}
 
-	// Filter users ...
-	const filteredUsers = context.state.users.filter(({ name, nat }) => {
+	// Filter results ...
+	const filteredResults = context.state.results.filter(({ name, nat }) => {
 		let meetsConditions = true;
 
 		// ... by nationalityFilter ...
@@ -115,7 +115,7 @@ const useUsers = (): Context => {
 
 	// Don't mutate the state directly, in case
 	// we would want to change the filtering again
-	return { ...context, state: { ...context.state, users: filteredUsers } };
+	return { ...context, state: { ...context.state, results: filteredResults } };
 };
 
 export { UsersProvider, useUsers, Nationality };

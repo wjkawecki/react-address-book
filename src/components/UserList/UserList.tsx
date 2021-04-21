@@ -5,19 +5,20 @@ import styles from './UserList.module.scss';
 
 const UserList: React.FC = (): React.ReactElement => {
 	const {
-		state: { users, nationalityFilter, fetching },
+		state: { results, nationalityFilter, fetching },
 		dispatch,
 	} = useUsers();
 
 	useEffect(() => {
-		if (fetching || users.length) return;
+		if (fetching || results.length) return;
 
 		dispatch({ type: 'FETCH_START' });
 		fetchUsers({ nat: nationalityFilter })
-			.then((response) => dispatch({ type: 'ADD_USERS', users: response.results }))
+			.then((response) => dispatch({ type: 'ADD_USERS', ...response }))
 			.then(() => dispatch({ type: 'FETCH_END' }));
 
-		// disabling react-hooks/exhaustive-deps as we really want to do it only once
+		// disabling react-hooks/exhaustive-deps as we
+		// really want to run this code only once
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -25,8 +26,8 @@ const UserList: React.FC = (): React.ReactElement => {
 		<div>
 			<p>Fetching: {`${fetching}`}</p>
 			<ul className={styles.base}>
-				{!!users.length &&
-					users.map((user) => (
+				{!!results.length &&
+					results.map((user) => (
 						<li key={user.login?.uuid}>{`${user.name?.first} ${user.name?.last} [${user.nat}]`}</li>
 					))}
 			</ul>
