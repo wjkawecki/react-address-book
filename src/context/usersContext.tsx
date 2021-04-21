@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 type Action =
+	| { type: 'FETCH_USERS'; fetching: boolean }
 	| { type: 'ADD_USERS'; users: API.User[] }
 	| { type: 'SET_NATIONALITY_FILTER'; nationality: UserNationality };
 
@@ -73,6 +74,17 @@ const useUsers = (): Context => {
 
 	if (context === undefined) {
 		throw new Error('useUsers must be used within a UsersProvider');
+	}
+
+	// Filter users if nationalityFilter is provided
+	if (context.state.nationalityFilter.length) {
+		const filteredUsers = context.state.users.filter((user) =>
+			context.state.nationalityFilter.includes(user.nat as UserNationality)
+		);
+
+		// Don't mutate the state directly, in case
+		// we would want to change the filtering again
+		return { ...context, state: { ...context.state, users: filteredUsers } };
 	}
 
 	return context;
