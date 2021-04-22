@@ -1,27 +1,23 @@
-import { useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef } from 'react';
 import { useUsers } from '../../context/usersContext';
-import fetchUsers from '../../utils/api';
+import useIntersecionObserver from '../../utils/useIntersectionObserver';
 import UserCard from '../UserCard/UserCard';
 import styles from './UserList.module.scss';
 
 const UserList: React.FC = (): React.ReactElement => {
+	const loader = useRef<HTMLDivElement>(null);
+	const { isIntersecting } = useIntersecionObserver(loader);
+	const { context, fetchUsers } = useUsers();
 	const {
-		state: { results, nationalityFilter, fetching },
-		dispatch,
-	} = useUsers();
+		state: { results },
+	} = context;
 
 	useEffect(() => {
-		if (fetching || results.length) return;
-
-		dispatch({ type: 'FETCH_START' });
-		fetchUsers({ nat: nationalityFilter })
-			.then((response) => dispatch({ type: 'ADD_USERS', ...response }))
-			.then(() => dispatch({ type: 'FETCH_END' }));
-
-		// disabling react-hooks/exhaustive-deps as we
-		// really want to run this code only once
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		if (isIntersecting) {
+			fetchUsers();
+		}
+	}, [isIntersecting]);
 
 	return (
 		<div className={styles.base}>
@@ -34,6 +30,7 @@ const UserList: React.FC = (): React.ReactElement => {
 					))}
 				</ul>
 			)}
+			<div ref={loader} />
 		</div>
 	);
 };

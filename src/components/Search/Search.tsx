@@ -3,8 +3,10 @@ import styles from './Search.module.scss';
 
 const Search: React.FC = (): React.ReactElement => {
 	const {
-		state: { search },
-		dispatch,
+		context: {
+			state: { search },
+			dispatch,
+		},
 	} = useUsers();
 
 	const onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {

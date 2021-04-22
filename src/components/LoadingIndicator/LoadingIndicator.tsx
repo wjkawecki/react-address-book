@@ -3,7 +3,9 @@ import styles from './LoadingIndicator.module.scss';
 
 const LoadingIndicator: React.FC = (): React.ReactElement | null => {
 	const {
-		state: { fetching },
+		context: {
+			state: { fetching },
+		},
 	} = useUsers();
 
 	return fetching ? (

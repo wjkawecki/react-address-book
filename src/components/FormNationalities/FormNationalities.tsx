@@ -4,12 +4,14 @@ import styles from './FormNationalities.module.scss';
 
 const FormNationalities: React.FC = (): React.ReactElement => {
 	const {
-		state: { nationalityFilter },
-		dispatch,
+		context: {
+			state: { nationalityFilter },
+		},
+		setNationalityFilter,
 	} = useUsers();
 
 	const onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch({ type: 'SET_NATIONALITY_FILTER', nationality: value as Nationality });
+		setNationalityFilter(value as Nationality);
 	};
 
 	return (

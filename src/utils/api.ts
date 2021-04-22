@@ -2,7 +2,7 @@ import queryString from 'query-string';
 
 // https://randomuser.me/documentation
 
-const fetchUsers = async (params: API.Params = {}): Promise<API.Response> => {
+const apiFetcher = async (params: API.Params = {}): Promise<API.Response> => {
 	const defaultParams: API.Params = {
 		inc: ['email', 'login', 'name', 'nat', 'picture', 'location', 'phone', 'cell'],
 		results: 50,
@@ -25,4 +25,4 @@ const fetchUsers = async (params: API.Params = {}): Promise<API.Response> => {
 	return response.json();
 };
 
-export default fetchUsers;
+export default apiFetcher;

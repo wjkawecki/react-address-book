@@ -8,7 +8,7 @@ declare namespace API {
 			city: string;
 			state: string;
 			country: string;
-			postcode: number;
+			postcode: string | number;
 			coordinates: { latitude: string; longitude: string };
 			timezone: { offset: string; description: string };
 		};
