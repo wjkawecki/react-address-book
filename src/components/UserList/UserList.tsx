@@ -7,7 +7,7 @@ import styles from './UserList.module.scss';
 
 const intersectionOptions = {
 	root: null,
-	rootMargin: '100px',
+	rootMargin: '150px',
 	threshold: 1.0,
 };
 
@@ -16,10 +16,10 @@ const UserList: React.FC = (): React.ReactElement => {
 	const { isIntersecting } = useIntersecionObserver(loader, intersectionOptions);
 	const { context, fetchUsers } = useUsers();
 	const {
-		state: { results },
+		state: { results, endOfUserCatalog },
 	} = context;
 
-	// fetch more users when the 'loader' div is visible or 100px from screen edge
+	// fetch more users when the 'loader' div is visible or 150px from screen edge
 	useEffect(() => {
 		if (isIntersecting) {
 			fetchUsers();
@@ -27,18 +27,27 @@ const UserList: React.FC = (): React.ReactElement => {
 	}, [isIntersecting]);
 
 	return (
-		<div className={styles.base}>
-			{!!results.length && (
-				<ul className={styles.list}>
-					{results.map((user) => (
-						<li key={user.login?.uuid}>
-							<UserCard user={user} />
-						</li>
-					))}
-				</ul>
+		<>
+			<div className={styles.base}>
+				{!!results.length && (
+					<ul className={styles.list}>
+						{results.map((user) => (
+							<li key={user.login?.uuid}>
+								<UserCard user={user} />
+							</li>
+						))}
+					</ul>
+				)}
+			</div>
+
+			{endOfUserCatalog ? (
+				<section className="padding">
+					<p className="center-text">End of user catalog!</p>
+				</section>
+			) : (
+				<div ref={loader} />
 			)}
-			<div ref={loader} />
-		</div>
+		</>
 	);
 };
 

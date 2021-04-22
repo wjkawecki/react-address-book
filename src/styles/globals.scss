@@ -46,3 +46,7 @@ p {
 .padding {
 	@include containerPadding;
 }
+
+.center-text {
+	text-align: center;
+}

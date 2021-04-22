@@ -12,6 +12,7 @@ export enum Nationality {
 export type Action =
 	| { type: 'ADD_PREFETCHED_USERS' }
 	| { type: 'ADD_USERS'; results: API.User[] }
+	| { type: 'END_OF_USER_CATALOG' }
 	| { type: 'FETCH_END' }
 	| { type: 'FETCH_START' }
 	| { type: 'PREFETCH_USERS'; results: API.User[] }
@@ -25,11 +26,12 @@ type FetchUsers = (params?: API.Params) => void;
 type SetNationalityFilter = (nationality: Nationality) => void;
 
 export interface State {
+	endOfUserCatalog: boolean;
 	fetching: boolean;
 	nationalityFilter: Nationality[];
-	search: string;
-	results: API.User[];
 	prefetchedResults: API.User[];
+	results: API.User[];
+	search: string;
 }
 
 export interface Context {
@@ -48,6 +50,7 @@ const defaultState: State = {
 	search: '',
 	results: [],
 	prefetchedResults: [],
+	endOfUserCatalog: false,
 };
 
 const UsersContext = createContext<Context>({
@@ -66,6 +69,9 @@ const usersReducer = (state: State, action: Action): State => {
 				results: [...state.results, ...state.prefetchedResults],
 				prefetchedResults: [],
 			};
+
+		case 'END_OF_USER_CATALOG':
+			return { ...state, endOfUserCatalog: true };
 
 		case 'PREFETCH_USERS':
 			return { ...state, prefetchedResults: action.results };
@@ -141,6 +147,13 @@ export const useUsers = (): {
 	});
 
 	const fetchSequence = (type: 'ADD_USERS' | 'PREFETCH_USERS', params?: API.Params) => {
+		// Since https://randomuser.me/documentation#pagination doesn't have a limit for requesting users
+		// we have to artificially stop fetching users after getting 1000 results
+		if (state.results.length + state.prefetchedResults.length >= 1000) {
+			dispatch({ type: 'END_OF_USER_CATALOG' });
+			return;
+		}
+
 		dispatch({ type: 'FETCH_START' });
 		apiFetcher({ ...params, nat: state.nationalityFilter })
 			.then((response) => dispatch({ type, ...response }))
