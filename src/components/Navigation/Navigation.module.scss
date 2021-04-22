@@ -1,11 +1,15 @@
 @import '../../styles/common';
 
 .base {
-	display: flex;
 	flex-grow: 1;
-	flex-direction: column;
-	align-items: flex-end;
-	justify-content: flex-end;
+
+	ul {
+		@include resetList;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
 
 	a {
 		display: flex;
@@ -20,8 +24,10 @@
 	}
 
 	@include from(medium) {
-		flex-direction: row;
-		align-items: center;
+		ul {
+			flex-direction: row;
+			align-items: center;
+		}
 
 		a {
 			padding: rem(20);

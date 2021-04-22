@@ -3,7 +3,7 @@ import RoutePaths from '../routes/paths';
 
 const Page404: React.FC = (): React.ReactElement => {
 	return (
-		<section>
+		<section className="padding">
 			Not found! Go to <Link to={RoutePaths.Home}>Home</Link>
 		</section>
 	);

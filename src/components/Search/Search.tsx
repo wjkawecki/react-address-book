@@ -14,7 +14,7 @@ const Search: React.FC = (): React.ReactElement => {
 	return (
 		<div className={styles.base}>
 			<label htmlFor="search">
-				<span>Search:</span>
+				<span>Search</span>
 				<input id="search" name="search" value={search} onChange={onChange} />
 			</label>
 		</div>

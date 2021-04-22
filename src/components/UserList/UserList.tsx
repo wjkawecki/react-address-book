@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useUsers } from '../../context/usersContext';
 import fetchUsers from '../../utils/api';
+import UserCard from '../UserCard/UserCard';
 import styles from './UserList.module.scss';
 
 const UserList: React.FC = (): React.ReactElement => {
@@ -23,14 +24,16 @@ const UserList: React.FC = (): React.ReactElement => {
 	}, []);
 
 	return (
-		<div>
-			<p>Fetching: {`${fetching}`}</p>
-			<ul className={styles.base}>
-				{!!results.length &&
-					results.map((user) => (
-						<li key={user.login?.uuid}>{`${user.name?.first} ${user.name?.last} [${user.nat}]`}</li>
+		<div className={styles.base}>
+			{!!results.length && (
+				<ul className={styles.list}>
+					{results.map((user) => (
+						<li key={user.login?.uuid}>
+							<UserCard user={user} />
+						</li>
 					))}
-			</ul>
+				</ul>
+			)}
 		</div>
 	);
 };

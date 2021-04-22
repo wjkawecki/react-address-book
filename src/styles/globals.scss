@@ -24,20 +24,6 @@ html {
 	height: -webkit-fill-available;
 }
 
-main {
-	max-width: rem(860);
-	margin: 0 auto;
-	padding: rem(20);
-
-	@include from(medium) {
-		padding: rem(30);
-	}
-
-	@include from(large) {
-		padding: rem(40);
-	}
-}
-
 h1 {
 	margin: 0;
 	@include typographyHeadline;
@@ -55,4 +41,8 @@ p {
 
 .visually-hidden {
 	@include visuallyHidden;
+}
+
+.padding {
+	@include containerPadding;
 }

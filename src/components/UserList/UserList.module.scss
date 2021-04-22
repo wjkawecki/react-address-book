@@ -1,12 +1,24 @@
 @import '../../styles/common';
 
 .base {
-	div {
-		display: flex;
-		align-items: center;
+	@include containerPadding;
+}
+
+.list {
+	@include resetList;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: rem(20);
+
+	@include from(medium) {
+		grid-template-columns: repeat(2, 1fr);
 	}
-	label {
-		flex-grow: 1;
-		margin-left: rem(12);
+
+	@include from(large) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@include from(xlarge) {
+		grid-template-columns: repeat(4, 1fr);
 	}
 }

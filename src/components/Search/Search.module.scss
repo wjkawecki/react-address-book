@@ -1,8 +1,26 @@
 @import '../../styles/common';
 
 .base {
+	@include containerPadding;
 	position: sticky;
 	top: 0;
-	padding: rem(20);
-	background: pink;
+	background: $colorBackground;
+	box-shadow: $shadowLevel1;
+
+	label {
+		display: flex;
+		align-items: center;
+	}
+
+	span {
+		font-weight: bold;
+	}
+
+	input {
+		flex-grow: 1;
+		margin-left: rem(20);
+		padding: rem(4) rem(8);
+		border: rem(1) solid $colorHighlightBackground;
+		border-radius: rem(5);
+	}
 }

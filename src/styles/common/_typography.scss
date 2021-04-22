@@ -42,3 +42,15 @@ $fontSizeBase: 16px;
 	line-height: 1.5;
 	@include safariResizeFix;
 }
+
+@mixin typographyParagraphSmall {
+	font-size: fluidValue(14, 16);
+	line-height: 1.5;
+	@include safariResizeFix;
+}
+
+@mixin typographyParagraphXSmall {
+	font-size: fluidValue(10, 12);
+	line-height: 1.5;
+	@include safariResizeFix;
+}

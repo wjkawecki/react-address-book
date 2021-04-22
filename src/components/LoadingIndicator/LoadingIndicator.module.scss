@@ -1,0 +1,19 @@
+@import '../../styles/common';
+
+.base {
+	position: fixed;
+	bottom: rem(40);
+	display: flex;
+	width: 100%;
+	justify-content: center;
+
+	span {
+		@include typographyParagraphSmall;
+		@include animationScaleIn;
+		padding: rem(5) rem(10);
+		background-color: $colorPrimary;
+		color: $colorText;
+		border-radius: rem(5);
+		box-shadow: $shadowLevel2;
+	}
+}

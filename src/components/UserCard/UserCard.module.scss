@@ -1,0 +1,35 @@
+@import '../../styles/common';
+
+.base {
+	display: flex;
+	border: rem(1) solid rgba($colorHighlightBackground, 0.3);
+	border-radius: rem(5);
+	padding: rem(10);
+	overflow: hidden;
+	box-shadow: $shadowLevel1;
+	align-items: center;
+}
+
+.image {
+	width: auto;
+	height: 100%;
+	margin: rem(10) rem(20) rem(10) rem(10);
+	padding: rem(3);
+	border-radius: 50%;
+	box-shadow: $shadowLevel2;
+}
+
+.header {
+	font-weight: bold;
+}
+
+.username {
+	@include typographyParagraphSmall;
+	margin: 0;
+	color: $colorSecondaryText;
+}
+
+.email {
+	@include typographyParagraphXSmall;
+	text-decoration: none;
+}
