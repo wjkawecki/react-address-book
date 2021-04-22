@@ -1,6 +1,9 @@
 import { RefObject, useEffect, useState } from 'react';
 
-const useIntersecionObserver = (target: RefObject<Element> | null): { isIntersecting: boolean } => {
+const useIntersecionObserver = (
+	target: RefObject<Element> | null,
+	options?: IntersectionObserverInit
+): { isIntersecting: boolean } => {
 	const [isIntersecting, setIntersecting] = useState(false);
 
 	useEffect(() => {
@@ -8,18 +11,12 @@ const useIntersecionObserver = (target: RefObject<Element> | null): { isIntersec
 			setIntersecting(entities[0].isIntersecting);
 		};
 
-		const options = {
-			root: null,
-			rootMargin: '0px',
-			threshold: 1.0,
-		};
-
 		const observer = new IntersectionObserver(handleObserver, options);
 
 		if (target?.current) {
 			observer.observe(target.current);
 		}
-	}, [target]);
+	}, [target, options]);
 
 	return { isIntersecting };
 };

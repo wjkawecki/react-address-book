@@ -10,9 +10,11 @@ export enum Nationality {
 }
 
 export type Action =
+	| { type: 'ADD_PREFETCHED_USERS' }
 	| { type: 'ADD_USERS'; results: API.User[] }
-	| { type: 'FETCH_START' }
 	| { type: 'FETCH_END' }
+	| { type: 'FETCH_START' }
+	| { type: 'PREFETCH_USERS'; results: API.User[] }
 	| { type: 'SET_NATIONALITY_FILTER'; nationality: Nationality }
 	| { type: 'SET_SEARCH'; search: string };
 
@@ -27,6 +29,7 @@ export interface State {
 	nationalityFilter: Nationality[];
 	search: string;
 	results: API.User[];
+	prefetchedResults: API.User[];
 }
 
 export interface Context {
@@ -44,6 +47,7 @@ const defaultState: State = {
 		: defaultNationalityFilter,
 	search: '',
 	results: [],
+	prefetchedResults: [],
 };
 
 const UsersContext = createContext<Context>({
@@ -55,6 +59,16 @@ const usersReducer = (state: State, action: Action): State => {
 	switch (action.type) {
 		case 'ADD_USERS':
 			return { ...state, results: [...state.results, ...action.results] };
+
+		case 'ADD_PREFETCHED_USERS':
+			return {
+				...state,
+				results: [...state.results, ...state.prefetchedResults],
+				prefetchedResults: [],
+			};
+
+		case 'PREFETCH_USERS':
+			return { ...state, prefetchedResults: action.results };
 
 		case 'FETCH_START':
 			return { ...state, fetching: true };
@@ -126,14 +140,26 @@ export const useUsers = (): {
 		return meetsConditions;
 	});
 
+	const fetchSequence = (type: 'ADD_USERS' | 'PREFETCH_USERS', params?: API.Params) => {
+		dispatch({ type: 'FETCH_START' });
+		apiFetcher({ ...params, nat: state.nationalityFilter })
+			.then((response) => dispatch({ type, ...response }))
+			.then(() => dispatch({ type: 'FETCH_END' }));
+	};
+
 	const fetchUsers: FetchUsers = (params) => {
 		// Prevent multiple simultaneous requests and block fetching when search is active
 		if (state.fetching || state.search) return;
 
-		dispatch({ type: 'FETCH_START' });
-		apiFetcher({ ...params, nat: state.nationalityFilter })
-			.then((response) => dispatch({ type: 'ADD_USERS', ...response }))
-			.then(() => dispatch({ type: 'FETCH_END' }));
+		if (state.prefetchedResults.length) {
+			dispatch({ type: 'ADD_PREFETCHED_USERS' });
+		} else {
+			fetchSequence('ADD_USERS', params);
+		}
+
+		window.requestIdleCallback(() => {
+			fetchSequence('PREFETCH_USERS', params);
+		});
 	};
 
 	const setNationalityFilter: SetNationalityFilter = (nationality) => {
