@@ -1,4 +1,5 @@
 import { Nationality, useUsers } from '../../context/usersContext';
+import Checkbox from '../Forms/Checkbox/Checkbox';
 import styles from './FormNationalities.module.scss';
 
 const FormNationalities: React.FC = (): React.ReactElement => {
@@ -13,22 +14,21 @@ const FormNationalities: React.FC = (): React.ReactElement => {
 
 	return (
 		<form className={styles.base}>
-			<fieldset>
-				<legend>I want to display users of these nationalities</legend>
+			<fieldset className={styles.fieldset}>
+				<legend className={styles.legend}>I want to display users of these nationalities</legend>
 
 				{/* Loop all possible nationalities */}
 				{Object.values(Nationality).map((nat) => (
-					<div key={nat}>
-						<input
-							id={`nat_${nat}`}
-							type="checkbox"
-							name="nat"
-							value={nat}
-							checked={nationalityFilter.includes(nat)}
-							onChange={onChange}
-						/>
-						<label htmlFor={`nat_${nat}`}>{nat}</label>
-					</div>
+					<Checkbox
+						key={nat}
+						id={`nat_${nat}`}
+						type="checkbox"
+						name="nat"
+						value={nat}
+						checked={nationalityFilter.includes(nat)}
+						onChange={onChange}
+						label={nat}
+					/>
 				))}
 			</fieldset>
 		</form>

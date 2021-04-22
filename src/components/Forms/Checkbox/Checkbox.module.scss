@@ -1,0 +1,53 @@
+@import '../../../styles/common';
+
+$checkboxSize: rem(24);
+
+.base {
+	display: flex;
+	margin: rem(10) 0;
+	cursor: pointer;
+
+	.checkboxInput {
+		display: flex;
+		margin-right: rem(10);
+
+		input {
+			position: absolute;
+			opacity: 0;
+			width: $checkboxSize;
+			height: $checkboxSize;
+			border-radius: rem(2);
+
+			&:checked + .checkboxControl {
+				img {
+					transform: scale(1);
+				}
+			}
+		}
+	}
+
+	.checkboxControl {
+		display: flex;
+		width: $checkboxSize;
+		height: $checkboxSize;
+		border-radius: rem(2);
+		border: rem(2) solid $colorHighlightBackground;
+		background-color: $colorBackground;
+		align-items: center;
+		justify-content: center;
+		transition: border-radius $transitionDefault;
+
+		img {
+			width: $checkboxSize / 2;
+			transform: scale(0);
+			transition: transform $transitionDefault;
+		}
+	}
+
+	&:hover,
+	&:focus-within {
+		.checkboxControl {
+			border-radius: 50%;
+		}
+	}
+}

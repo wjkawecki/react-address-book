@@ -1,12 +1,28 @@
 @import '../../styles/common';
 
 .base {
-	div {
-		display: flex;
-		align-items: center;
-	}
-	label {
-		flex-grow: 1;
-		margin-left: rem(12);
-	}
+	@include containerPadding;
+	// background-color: $colorHighlightBackground;
+	border-radius: rem(5);
+	// color: $colorHighlightText;
+}
+
+.fieldset {
+	border-color: $colorPrimary;
+	border-radius: rem(5);
+}
+
+.legend {
+	color: $colorText;
+	padding: 0 rem(10);
+}
+
+.field {
+	display: flex;
+	align-items: center;
+}
+
+.label {
+	flex-grow: 1;
+	margin-left: rem(12);
 }
