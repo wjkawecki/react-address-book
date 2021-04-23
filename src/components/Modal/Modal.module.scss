@@ -8,6 +8,7 @@
 	background-color: $colorBackground;
 	border-radius: rem(10);
 	box-shadow: $shadowLevel2;
+	@include animationScaleIn;
 }
 
 .overlay {
