@@ -9,7 +9,7 @@ export enum Nationality {
 	GB = 'GB',
 }
 
-const LOCAL_STORAGE_NATIONALITY_FILTER_KEY = 'nationalityFilter';
+export const LOCAL_STORAGE_NATIONALITY_FILTER_KEY = 'nationalityFilter';
 
 const storedNationalityFilter = localStorage.getItem(LOCAL_STORAGE_NATIONALITY_FILTER_KEY);
 const defaultNationalityFilter = Object.values(Nationality);
@@ -74,6 +74,7 @@ const usersReducer = (state: State, action: Action): State => {
 			return { ...state, search: action.search };
 
 		default:
+			// will never happen thanks to TypeScript
 			return state;
 	}
 };

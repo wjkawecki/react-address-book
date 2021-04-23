@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { UsersProvider } from '../../context/usersContext';
 import Search from './Search';
 
@@ -12,6 +13,6 @@ test('renders search input', () => {
 
 	// let's verify if context handles search onChange correctly
 	const value = 'search query';
-	fireEvent.change(input, { target: { value } });
+	userEvent.type(input, value);
 	expect(input).toHaveAttribute('value', value);
 });
