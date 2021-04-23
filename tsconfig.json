@@ -15,7 +15,6 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"typeRoots": ["src/types"],
 		"types": ["@types/jest"]
 	},
 	"include": ["react-app-env.d.ts", "**/*.ts", "**/*.tsx"]

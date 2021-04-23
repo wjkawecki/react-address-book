@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import { State, Action, Context, FetchUsers, SetNationalityFilter } from '../typings/usersContext';
 import apiFetcher from '../utils/api';
 
 // Possible nationalities of fetched users
@@ -9,37 +10,8 @@ export enum Nationality {
 	GB = 'GB',
 }
 
-export type Action =
-	| { type: 'ADD_PREFETCHED_USERS' }
-	| { type: 'ADD_USERS'; results: API.User[] }
-	| { type: 'END_OF_USER_CATALOG' }
-	| { type: 'FETCH_END' }
-	| { type: 'FETCH_START' }
-	| { type: 'PREFETCH_USERS'; results: API.User[] }
-	| { type: 'SET_NATIONALITY_FILTER'; nationality: Nationality }
-	| { type: 'SET_SEARCH'; search: string };
-
-export type Dispatch = React.Dispatch<Action>;
-
-type FetchUsers = (params?: API.Params) => void;
-
-type SetNationalityFilter = (nationality: Nationality) => void;
-
-export interface State {
-	endOfUserCatalog: boolean;
-	fetching: boolean;
-	nationalityFilter: Nationality[];
-	prefetchedResults: API.User[];
-	results: API.User[];
-	search: string;
-}
-
-export interface Context {
-	state: State;
-	dispatch: Dispatch;
-}
-
 const LOCAL_STORAGE_NATIONALITY_FILTER_KEY = 'nationalityFilter';
+
 const storedNationalityFilter = localStorage.getItem(LOCAL_STORAGE_NATIONALITY_FILTER_KEY);
 const defaultNationalityFilter = Object.values(Nationality);
 const defaultState: State = {
