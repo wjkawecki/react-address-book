@@ -3,7 +3,7 @@ import info from '../../assets/info.svg';
 
 type UserCardType = {
 	user: API.User;
-	onClick: () => void;
+	onClick?: () => void;
 };
 
 const UserCard: React.FC<UserCardType> = ({ user, onClick }): React.ReactElement => {
