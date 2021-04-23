@@ -1,13 +1,12 @@
-import { useUsers } from '../../context/usersContext';
 import styles from './LoadingIndicator.module.scss';
 
-const LoadingIndicator: React.FC = (): React.ReactElement | null => {
-	const {
-		context: {
-			state: { fetching },
-		},
-	} = useUsers();
+interface LoadingIndicatorProps {
+	fetching: boolean;
+}
 
+const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
+	fetching,
+}): React.ReactElement | null => {
 	return fetching ? (
 		<div className={styles.base}>
 			<span>loading...</span>

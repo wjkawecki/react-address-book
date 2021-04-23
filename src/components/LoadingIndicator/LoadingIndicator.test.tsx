@@ -1,7 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { UsersProvider } from '../../context/usersContext';
 import LoadingIndicator from './LoadingIndicator';
 
-test.skip('renders checkbox for each Nationality', () => {
-	render(<LoadingIndicator />, { wrapper: UsersProvider });
+test('renders LoadingIndicator when fetching', () => {
+	render(<LoadingIndicator fetching />);
+
+	expect(screen.getByText(/loading/i)).toBeInTheDocument();
+});
+
+test('renders nothing when not fetching', () => {
+	render(<LoadingIndicator fetching={false} />);
+
+	expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
 });

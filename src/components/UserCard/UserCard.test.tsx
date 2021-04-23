@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { UsersProvider } from '../../context/usersContext';
 import UserCard from './UserCard';
 
 const mockUser = {
@@ -47,7 +46,7 @@ const mockUser = {
 };
 
 test('renders UserCard', () => {
-	render(<UserCard user={mockUser} />, { wrapper: UsersProvider });
+	render(<UserCard user={mockUser} />);
 
 	const name = screen.getByText(/Richard Crawford/i);
 	expect(name).toBeInTheDocument();
