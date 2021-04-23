@@ -7,6 +7,7 @@
 		"query-string": "^7.0.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
+		"react-modal": "^3.13.1",
 		"react-router-dom": "^5.2.0",
 		"requestidlecallback-polyfill": "^1.0.2",
 		"web-vitals": "^1.0.1"
@@ -46,6 +47,7 @@
 		"@types/node": "^12.0.0",
 		"@types/react": "^17.0.0",
 		"@types/react-dom": "^17.0.0",
+		"@types/react-modal": "^3.12.0",
 		"@types/react-router-dom": "^5.1.7",
 		"@typescript-eslint/eslint-plugin": "^4.22.0",
 		"@typescript-eslint/parser": "^4.22.0",

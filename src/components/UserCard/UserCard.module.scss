@@ -1,10 +1,11 @@
 @import '../../styles/common';
 
 .base {
+	position: relative;
 	display: flex;
 	border: rem(1) solid rgba($colorHighlightBackground, 0.3);
 	border-radius: rem(5);
-	padding: rem(10);
+	padding: rem(10) rem(30) rem(10) rem(10);
 	overflow: hidden;
 	box-shadow: $shadowLevel1;
 	align-items: center;
@@ -32,4 +33,22 @@
 .email {
 	@include typographyParagraphXSmall;
 	text-decoration: none;
+	word-break: break-word;
+}
+
+.info {
+	@include resetButton;
+	position: absolute;
+	top: rem(0);
+	right: rem(0);
+	background-color: $colorHighlightBackground;
+	padding: rem(5);
+	border-bottom-left-radius: 50%;
+	box-shadow: $shadowLevel1;
+
+	img {
+		display: block;
+		width: rem(16);
+		height: rem(16);
+	}
 }

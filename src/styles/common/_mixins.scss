@@ -4,6 +4,13 @@
 	list-style: none;
 }
 
+@mixin resetButton {
+	border: 0;
+	padding: 0;
+	background: none;
+	cursor: pointer;
+}
+
 // https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
 @mixin visuallyHidden {
 	clip: rect(1px, 1px, 1px, 1px);

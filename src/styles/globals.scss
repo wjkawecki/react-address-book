@@ -47,6 +47,10 @@ p {
 	@include containerPadding;
 }
 
+.reset-button {
+	@include resetButton;
+}
+
 .center-text {
 	text-align: center;
 }

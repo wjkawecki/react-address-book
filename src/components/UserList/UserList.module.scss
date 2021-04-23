@@ -22,3 +22,15 @@
 		grid-template-columns: repeat(4, 1fr);
 	}
 }
+
+.table {
+	width: 100%;
+
+	td {
+		border: rem(1) solid $colorText;
+
+		&:nth-child(1) {
+			font-weight: bold;
+		}
+	}
+}
