@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { State, Action, Context, FetchUsers, SetNationalityFilter } from '../typings/usersContext';
 import apiFetcher from '../utils/api';
 
 // Possible nationalities of fetched users
